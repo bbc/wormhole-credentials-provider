@@ -1,0 +1,24 @@
+{
+  "name": "wormhole-credentials-provider",
+  "version": "1.0.0",
+  "description": "aws credentials-provider for bbc wormhole",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phillipbarron/wormhole-credentials-provider.git"
+  },
+  "keywords": [
+    "aws",
+    "wormhole",
+    "node"
+  ],
+  "author": "Phill Barron",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phillipbarron/wormhole-credentials-provider/issues"
+  },
+  "homepage": "https://github.com/phillipbarron/wormhole-credentials-provider#readme"
+}
