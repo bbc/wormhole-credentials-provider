@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/phillipbarron/wormhole-credentials-provider/issues"
   },
-  "homepage": "https://github.com/phillipbarron/wormhole-credentials-provider#readme"
+  "homepage": "https://github.com/phillipbarron/wormhole-credentials-provider#readme",
+  "dependencies": {
+    "@bbc/cps-wormhole": "^1.1.0",
+    "aws-sdk": "^2.416.0",
+    "jest": "^24.1.0"
+  }
 }
