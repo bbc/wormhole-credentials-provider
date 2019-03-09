@@ -1,10 +1,10 @@
 # Wormhole Credentials Provider
 
-this is a credenials provider for the AWD SDK to allows fallback to a call to the wormhole when no other credentials are supplied to the SDK.
+this is a credenials provider for the AWS SDK to allows fallback to a call to the wormhole when no other credentials are available.
 
 ## usage
 
-add to project
+add to project (not actually published yet!)
 
 ```bash
 npm i wormhole-credentials-provider
