@@ -35,18 +35,15 @@ const getProviders = async () => {
     environmentCredentialsAMAZON,
     sharedIniFileCredentials
   ];
-  const requiresAwsInstanceCredentials = await isRunningOnAws();
 
-  if (requiresAwsInstanceCredentials)
-    credentialsProviders.push(ec2InstanceCredentials);
+  if (await isRunningOnAws()) credentialsProviders.push(ec2InstanceCredentials);
 
   credentialsProviders.push(wormholeCredentialsProvider);
 
   return credentialsProviders;
 };
 const getCredentials = async () => {
-  const providers = await getProviders();
-  const chain = new AWS.CredentialProviderChain(providers);
+  const chain = new AWS.CredentialProviderChain(await getProviders());
   return await chain.resolvePromise();
 };
 
