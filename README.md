@@ -11,3 +11,7 @@ npm i wormhole-credentials-provider
 ```
 
 and then do stuff
+
+## todo
+
+1. deal with timeout issue when accessing EC2MetatData
