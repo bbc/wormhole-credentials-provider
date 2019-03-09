@@ -18,6 +18,7 @@ const getProviders = async () => {
   // this needs a try / catch to deal with the wormhole exploding
   const wormholeCredentialsProvider = async () => {
     const wormholeResponse = await wormholeClient.getCredentials();
+    // debug left here for mapping todo
     console.log("wormholeResponse", wormholeResponse);
     return new AWS.Credentials(wormholeResponse);
   };
