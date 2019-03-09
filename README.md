@@ -29,3 +29,4 @@ lots
 1. handle wormhole errors in try / catch
 1. map wormhole response to credentials (expiration => expireTime etc)
 1. implement refresh method (that should be a call to wormhole with some error handling)
+1. look at improving method to determine whether execution environment is AWS EC2
