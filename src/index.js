@@ -17,10 +17,21 @@ const isRunningOnAws = async () => {
 const getProviders = async () => {
   // this needs a try / catch to deal with the wormhole exploding
   const wormholeCredentialsProvider = async () => {
-    const wormholeResponse = await wormholeClient.getCredentials();
-    // debug left here for mapping todo
-    console.log("wormholeResponse", wormholeResponse);
-    return new AWS.Credentials(wormholeResponse);
+    try {
+      const wormholeResponse = await wormholeClient.getCredentials();
+      console.log("wormholeResponse", wormholeResponse);
+      const wormholeCredentialsOptions = {
+        expireTime: new Date(wormholeResponse.expiration),
+        ...wormholeResponse
+      };
+      console.log("~~~~~~~~~~~~~~~~~>", wormholeCredentialsOptions);
+      return new AWS.Credentials(wormholeCredentialsOptions);
+    } catch (error) {
+      console.log(
+        `failed to retrieve wormhole response with error ${error.message}`
+      );
+      return new AWS.Credentials();
+    }
   };
   const sharedIniFileCredentials = () =>
     new AWS.SharedIniFileCredentials("AWS");
