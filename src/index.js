@@ -24,7 +24,6 @@ const getProviders = async () => {
         expireTime: new Date(wormholeResponse.expiration),
         ...wormholeResponse
       };
-      console.log("~~~~~~~~~~~~~~~~~>", wormholeCredentialsOptions);
       return new AWS.Credentials(wormholeCredentialsOptions);
     } catch (error) {
       console.log(
