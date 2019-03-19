@@ -4,7 +4,7 @@ const axios = require("axios");
 
 const isRunningOnAws = async () => {
   try {
-    // todo - figure out how reasonable this is
+    // todo - figure out how reasonable this is - feels bad. Really bad.
     await axios.get("http://169.254.169.254/latest/meta-data", {
       timeout: 3000
     });
