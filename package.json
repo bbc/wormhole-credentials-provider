@@ -33,7 +33,7 @@
   "homepage": "https://github.com/phillipbarron/wormhole-credentials-provider#readme",
   "dependencies": {
     "@bbc/cps-wormhole": "^1.1.0",
-    "aws-sdk": "^2.416.0",
+    "aws-sdk": "^2.543.0",
     "axios": "^0.18.0"
   },
   "devDependencies": {
