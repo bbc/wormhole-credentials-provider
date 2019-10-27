@@ -19,7 +19,6 @@ const getProviders = async () => {
   const wormholeCredentialsProvider = async () => {
     try {
       const wormholeResponse = await wormholeClient.getCredentials();
-      console.log("wormholeResponse", wormholeResponse);
       const wormholeCredentialsOptions = {
         expireTime: new Date(wormholeResponse.expiration),
         ...wormholeResponse
