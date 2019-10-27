@@ -15,15 +15,26 @@ const isRunningOnAws = async () => {
 };
 
 const getProviders = async () => {
-  // this needs a try / catch to deal with the wormhole exploding
+  const refreshCredentials = async function() {
+    const wormholeResponse = await wormholeClient.getCredentials();
+    console.log("wormholeresponse", JSON.stringify(wormholeResponse, null, 2));
+    self.expireTime = new Date(wormholeResponse.expiration);
+    self.expired = false;
+    self.accessKeyId = wormholeResponse.accessKeyId;
+    self.secretAccessKey = wormholeResponse.secretAccessKey;
+    self.sessionToken = wormholeResponse.sessionToken;
+  };
   const wormholeCredentialsProvider = async () => {
     try {
       const wormholeResponse = await wormholeClient.getCredentials();
+      console.log("worholeresponse", JSON.stringify(wormholeResponse, null, 2));
       const wormholeCredentialsOptions = {
-        expireTime: new Date(wormholeResponse.expiration),
         ...wormholeResponse
       };
-      return new AWS.Credentials(wormholeCredentialsOptions);
+      const creds = new AWS.Credentials(wormholeCredentialsOptions);
+      creds.expireTime = new Date(wormholeResponse.expiration);
+      creds.refresh = refreshCredentials;
+      return creds;
     } catch (error) {
       console.log(
         `failed to retrieve wormhole response with error ${error.message}`

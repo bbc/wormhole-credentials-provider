@@ -31,3 +31,6 @@ lots
 1. implement refresh method (that should be a call to wormhole with some error handling)
 1. look at improving method to determine whether execution environment is AWS EC2
 1. check the Java implementation as this looks wrong
+
+
+https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CredentialProviderChain.html
