@@ -6,7 +6,7 @@ const isRunningOnAws = async () => {
   try {
     // todo - figure out how reasonable this is - feels bad. Really bad.
     await axios.get("http://169.254.169.254/latest/meta-data", {
-      timeout: 3000
+      timeout: 6000
     });
     return true;
   } catch (error) {
@@ -75,5 +75,6 @@ const getCredentials = async () => {
 };
 
 module.exports = {
-  getCredentials
+  getCredentials,
+  getProviders
 };
