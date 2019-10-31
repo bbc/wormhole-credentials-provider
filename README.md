@@ -38,6 +38,7 @@ this will force a refresh once a minute
 1. check how we determine whether we are running in a lambda
 1. add a build script
 1. remove example
+1. move to the BBC organisation
 1. publish
 1. itegrate with one of our services which has a long-running process
 
