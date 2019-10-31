@@ -10,6 +10,7 @@ const isRunningOnAws = async () => {
     });
     return true;
   } catch (error) {
+    console.log("NOT RUNNING ON AWS!");
     return false;
   }
 };
@@ -76,7 +77,9 @@ const getProviders = async () => {
 
 const getCredentials = async () => {
   const chain = new AWS.CredentialProviderChain(await getProviders());
-  return await chain.resolvePromise();
+  const resolvedCredentials = await chain.resolvePromise();
+  console.log("resolvedCredentials", resolvedCredentials);
+  return resolvedCredentials;
 };
 
 module.exports = {

@@ -42,5 +42,6 @@ this will force a refresh once a minute
 1. move to the BBC organisation
 1. publish
 1. itegrate with one of our services which has a long-running process
+1. can we return the credentials provider array and set that in AWS config?
 
 [Here is the AWS doc stuff](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CredentialProviderChain.html)
