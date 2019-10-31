@@ -14,6 +14,9 @@ const isRunningOnAws = async () => {
   }
 };
 
+const isRunningInDebugMode = () =>
+  process.env.WCP_DEBUG && process.env.WCP_DEBUG === "true";
+
 const getProviders = async () => {
   const refreshCredentials = async function(callback, credentials) {
     try {
@@ -33,9 +36,11 @@ const getProviders = async () => {
     try {
       const wormholeResponse = await wormholeClient.getCredentials();
       const credentials = new AWS.Credentials(wormholeResponse);
-      // this is to allow local debugging - wll refresh once a minute
       let expireDate = new Date(wormholeResponse.expiration);
-      expireDate.setMinutes(expireDate.getMinutes() - 59);
+      if (isRunningInDebugMode()) {
+        expireDate.setMinutes(expireDate.getMinutes() - 59);
+        console.log("RUNNING IN DEBUG. Expiry set to", expireDate);
+      }
       credentials.expireTime = expireDate;
       credentials.refresh = callback =>
         refreshCredentials(callback, credentials);
