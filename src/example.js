@@ -43,6 +43,6 @@ const getMessages = () => {
 };
 
 credentialsProvider.getCredentials().then(credentials => {
-  credentialsProvider.AWS.config.update({ credentials });
+  AWS.config.update({ credentials });
   getMessages();
 });

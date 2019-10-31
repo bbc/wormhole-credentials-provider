@@ -15,17 +15,19 @@ const isRunningOnAws = async () => {
 };
 
 const getProviders = async () => {
-  const refreshCredentials = async function() {
+  const refreshCredentials = async function(creds) {
     const wormholeResponse = await wormholeClient.getCredentials();
     console.log(
       "called wormhole to refresh credentials",
       JSON.stringify(wormholeResponse, null, 2)
     );
-    self.expireTime = new Date(wormholeResponse.expiration);
-    self.expired = false;
-    self.accessKeyId = wormholeResponse.accessKeyId;
-    self.secretAccessKey = wormholeResponse.secretAccessKey;
-    self.sessionToken = wormholeResponse.sessionToken;
+    creds.expireTime = new Date(wormholeResponse.expiration);
+    creds.expired = false;
+    creds.accessKeyId = wormholeResponse.accessKeyId;
+    creds.secretAccessKey = wormholeResponse.secretAccessKey;
+    creds.sessionToken = wormholeResponse.sessionToken;
+    console.log("credentials updated");
+    console.log(AWS.config.credentials);
   };
   const wormholeCredentialsProvider = async () => {
     try {
@@ -35,8 +37,10 @@ const getProviders = async () => {
         ...wormholeResponse
       };
       const creds = new AWS.Credentials(wormholeCredentialsOptions);
-      creds.expireTime = new Date(wormholeResponse.expiration);
-      creds.refresh = refreshCredentials;
+      let expireDate = new Date(wormholeResponse.expiration);
+      expireDate.setMinutes(expireDate.getMinutes() - 59);
+      creds.expireTime = expireDate;
+      creds.refresh = () => refreshCredentials(creds);
       return creds;
     } catch (error) {
       console.log(
@@ -60,7 +64,7 @@ const getProviders = async () => {
     sharedIniFileCredentials
   ];
 
-  if (await isRunningOnAws()) credentialsProviders.push(ec2InstanceCredentials);
+  // if (await isRunningOnAws()) credentialsProviders.push(ec2InstanceCredentials);
 
   credentialsProviders.push(wormholeCredentialsProvider);
 

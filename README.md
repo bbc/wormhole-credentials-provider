@@ -13,12 +13,14 @@ npm i wormhole-credentials-provider
 and then do stuff
 
 ```javascript
+const AWS = require("aws-sdk");
 const credentialsProvider = require('./src/index');
 
 credentialsProvider
     .getCredentials()
-    .then(creds => {
-        console.log('and the credentials are', creds);
+    .then(credentials => {
+        AWS.config.update({ credentials });
+        // some useful stuff
     });
 ```
 
@@ -28,5 +30,6 @@ lots
 
 1. look at improving method to determine whether execution environment is AWS EC2
 1. check the Java implementation as this looks wrong
+1. figure out why the refresh call kills the process
 
 [Here is the AWS doc stuff](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CredentialProviderChain.html)
