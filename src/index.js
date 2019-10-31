@@ -17,7 +17,10 @@ const isRunningOnAws = async () => {
 const getProviders = async () => {
   const refreshCredentials = async function() {
     const wormholeResponse = await wormholeClient.getCredentials();
-    console.log("wormholeresponse", JSON.stringify(wormholeResponse, null, 2));
+    console.log(
+      "called wormhole to refresh credentials",
+      JSON.stringify(wormholeResponse, null, 2)
+    );
     self.expireTime = new Date(wormholeResponse.expiration);
     self.expired = false;
     self.accessKeyId = wormholeResponse.accessKeyId;
@@ -63,9 +66,12 @@ const getProviders = async () => {
 
   return credentialsProviders;
 };
+
 const getCredentials = async () => {
   const chain = new AWS.CredentialProviderChain(await getProviders());
-  return await chain.resolvePromise();
+  const resolvedCredentials = await chain.resolvePromise();
+  console.log("resolvedCredentials", resolvedCredentials);
+  return resolvedCredentials;
 };
 
 module.exports = {
