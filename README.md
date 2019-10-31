@@ -39,6 +39,6 @@ this will force a refresh once a minute
 1. add a build script
 1. remove example
 1. publish
-1. itegrate with one our JS services
+1. itegrate with one of our services which has a long-running process
 
 [Here is the AWS doc stuff](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CredentialProviderChain.html)

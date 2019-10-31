@@ -1,7 +1,7 @@
 {
   "name": "wormhole-credentials-provider",
-  "version": "0.0.1",
-  "description": "aws credentials-provider for bbc wormhole",
+  "version": "0.0.1-ALPHA",
+  "description": "aws credentials-provider for BBC wormhole",
   "main": "index.js",
   "scripts": {
     "test": "jest",
