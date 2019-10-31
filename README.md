@@ -1,6 +1,6 @@
 # Wormhole Credentials Provider
 
-this is a credenials provider for the AWS SDK to allows fallback to a call to the wormhole where no other credentials are available.
+Credenials provider for the AWS SDK which will fallback to the wormhole where no other credentials are available.
 
 ## usage
 
@@ -28,5 +28,6 @@ credentialsProvider
 
 
 1. look at improving method to determine whether execution environment is AWS EC2
+1. check how we determine whether we are running in a lambda
 
 [Here is the AWS doc stuff](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CredentialProviderChain.html)
