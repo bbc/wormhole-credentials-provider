@@ -2,7 +2,7 @@ const AWS = require("aws-sdk");
 const credentialsProvider = require("./index");
 
 AWS.config.update({ region: "eu-west-1" });
-var sqs = new AWS.SQS({ apiVersion: "2012-11-05" });
+
 const QueueUrl =
   "https://sqs.eu-west-1.amazonaws.com/169163488685/phill-test-topic-queue";
 
@@ -16,6 +16,7 @@ const parameters = {
 };
 
 const getMessages = () => {
+  var sqs = new AWS.SQS({ apiVersion: "2012-11-05" });
   sqs.receiveMessage(parameters, async function(err, data) {
     if (err) {
       console.log("Receive Error", err);
@@ -28,7 +29,7 @@ const getMessages = () => {
         if (err) {
           console.log("Delete Error", err);
         } else {
-          console.log("Message Deleted", data.ResponseMetadata.RequestId);
+          console.log("Message Deleted", data);
         }
       });
       await new Promise((resolve, reject) => {
