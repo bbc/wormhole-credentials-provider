@@ -29,5 +29,6 @@ credentialsProvider
 
 1. look at improving method to determine whether execution environment is AWS EC2
 1. check how we determine whether we are running in a lambda
+1. add debug based on env var for local dev
 
 [Here is the AWS doc stuff](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CredentialProviderChain.html)
