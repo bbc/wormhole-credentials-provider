@@ -6,7 +6,7 @@ const isRunningOnAws = async () => {
   try {
     // todo - figure out how reasonable this is - feels bad. Really bad.
     await axios.get("http://169.254.169.254/latest/meta-data", {
-      timeout: 6000
+      timeout: 1500
     });
     return true;
   } catch (error) {
@@ -15,33 +15,31 @@ const isRunningOnAws = async () => {
 };
 
 const getProviders = async () => {
-  const refreshCredentials = async function(creds) {
-    const wormholeResponse = await wormholeClient.getCredentials();
-    console.log(
-      "called wormhole to refresh credentials",
-      JSON.stringify(wormholeResponse, null, 2)
-    );
-    creds.expireTime = new Date(wormholeResponse.expiration);
-    creds.expired = false;
-    creds.accessKeyId = wormholeResponse.accessKeyId;
-    creds.secretAccessKey = wormholeResponse.secretAccessKey;
-    creds.sessionToken = wormholeResponse.sessionToken;
-    console.log("credentials updated");
-    console.log(AWS.config.credentials);
+  const refreshCredentials = async function(callback, credentials) {
+    try {
+      const wormholeResponse = await wormholeClient.getCredentials();
+      credentials.expireTime = new Date(wormholeResponse.expiration);
+      credentials.expired = false;
+      credentials.accessKeyId = wormholeResponse.accessKeyId;
+      credentials.secretAccessKey = wormholeResponse.secretAccessKey;
+      credentials.sessionToken = wormholeResponse.sessionToken;
+      credentials.haveBeenRefreshed = true;
+    } catch (e) {
+      callback(e.getMessage());
+    }
+    callback();
   };
   const wormholeCredentialsProvider = async () => {
     try {
       const wormholeResponse = await wormholeClient.getCredentials();
-      console.log("worholeresponse", JSON.stringify(wormholeResponse, null, 2));
-      const wormholeCredentialsOptions = {
-        ...wormholeResponse
-      };
-      const creds = new AWS.Credentials(wormholeCredentialsOptions);
+      const credentials = new AWS.Credentials(wormholeResponse);
+      // this is to allow local debugging - wll refresh once a minute
       let expireDate = new Date(wormholeResponse.expiration);
       expireDate.setMinutes(expireDate.getMinutes() - 59);
-      creds.expireTime = expireDate;
-      creds.refresh = () => refreshCredentials(creds);
-      return creds;
+      credentials.expireTime = expireDate;
+      credentials.refresh = callback =>
+        refreshCredentials(callback, credentials);
+      return credentials;
     } catch (error) {
       console.log(
         `failed to retrieve wormhole response with error ${error.message}`
@@ -64,7 +62,7 @@ const getProviders = async () => {
     sharedIniFileCredentials
   ];
 
-  // if (await isRunningOnAws()) credentialsProviders.push(ec2InstanceCredentials);
+  if (await isRunningOnAws()) credentialsProviders.push(ec2InstanceCredentials);
 
   credentialsProviders.push(wormholeCredentialsProvider);
 
