@@ -35,6 +35,7 @@ this will force a refresh once a minute
 ## todo
 
 1. look at improving method to determine whether execution environment is AWS EC2
+1. TESTS!
 1. check how we determine whether we are running in a lambda
 1. add a build script
 1. remove example

@@ -76,9 +76,7 @@ const getProviders = async () => {
 
 const getCredentials = async () => {
   const chain = new AWS.CredentialProviderChain(await getProviders());
-  const resolvedCredentials = await chain.resolvePromise();
-  console.log("resolvedCredentials", resolvedCredentials);
-  return resolvedCredentials;
+  return await chain.resolvePromise();
 };
 
 module.exports = {
