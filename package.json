@@ -4,7 +4,7 @@
   "description": "aws credentials-provider for BBC wormhole",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "pre-commit": "lint-staged"
   },
   "pre-commit": [

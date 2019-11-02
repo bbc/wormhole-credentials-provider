@@ -8,6 +8,7 @@ const isRunningOnAws = async () => {
     await axios.get("http://169.254.169.254/latest/meta-data", {
       timeout: 1500
     });
+    console.log("RUNNING ON AWS!");
     return true;
   } catch (error) {
     console.log("NOT RUNNING ON AWS!");
@@ -78,7 +79,6 @@ const getProviders = async () => {
 const getCredentials = async () => {
   const chain = new AWS.CredentialProviderChain(await getProviders());
   const resolvedCredentials = await chain.resolvePromise();
-  console.log("resolvedCredentials", resolvedCredentials);
   return resolvedCredentials;
 };
 
