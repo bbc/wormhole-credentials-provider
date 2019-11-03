@@ -5,6 +5,8 @@ const axios = require("axios");
 const isRunningOnAws = async () => {
   try {
     // todo - figure out how reasonable this is - feels bad. Really bad.
+    console.log("CALLLLLION");
+
     await axios.get("http://169.254.169.254/latest/meta-data", {
       timeout: 1500
     });
@@ -69,6 +71,7 @@ const getProviders = async () => {
     sharedIniFileCredentials
   ];
 
+  console.log("about to check where it is running");
   if (await isRunningOnAws()) credentialsProviders.push(ec2InstanceCredentials);
 
   credentialsProviders.push(wormholeCredentialsProvider);
