@@ -9,6 +9,7 @@ describe("wormhole-credentials-procvider", () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
+
   xtest("returns EnvironmentCredentials where set", async () => {
     process.env.AWS_ACCESS_KEY_ID = "ABCDERGHIJKLMNO";
     process.env.AWS_SECRET_ACCESS_KEY =
@@ -18,6 +19,7 @@ describe("wormhole-credentials-procvider", () => {
     console.log("credentials", JSON.stringify(credentials, null, 2));
     expect(credentials).toBeInstanceOf(AWS.EnvironmentCredentials);
   });
+
   xtest("resolves wormhole credentials provider in absence of any others", async () => {
     process.env = {};
     axios.get.mockResolvedValue(Error("foo"));
@@ -36,9 +38,10 @@ describe("wormhole-credentials-procvider", () => {
     console.log("providers", providers);
     expect(providers.length).toBe(5);
   });
+
   test("getProviders does not include ec2 instance credentials when not running on AWS", async () => {
     const provider = require("./index");
-    axios.get = () => new Error("foo");
+    axios.get.mockRejectedValue({ foo: "bar" });
     const providers = await provider.getProviders();
     console.log("providers", providers);
     expect(providers.length).toBe(4);

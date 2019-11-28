@@ -29,7 +29,7 @@ credentialsProvider
 this will force a refresh once a minute
 
 ```bash
- WCP_DEBUG=true node src/example.js 
+ WCP_DEBUG=true node src/example.js
 ```
 
 ## todo
