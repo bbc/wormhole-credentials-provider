@@ -17,21 +17,22 @@ const isRunningOnAws = async () => {
 const isRunningInDebugMode = () =>
   process.env.WCP_DEBUG && process.env.WCP_DEBUG === "true";
 
+const refreshCredentials = async function(callback, credentials) {
+  try {
+    const wormholeResponse = await wormholeClient.getCredentials();
+    credentials.expireTime = new Date(wormholeResponse.expiration);
+    credentials.expired = false;
+    credentials.accessKeyId = wormholeResponse.accessKeyId;
+    credentials.secretAccessKey = wormholeResponse.secretAccessKey;
+    credentials.sessionToken = wormholeResponse.sessionToken;
+    credentials.haveBeenRefreshed = true;
+  } catch (e) {
+    callback(e.getMessage());
+  }
+  callback();
+};
+
 const getProviders = async () => {
-  const refreshCredentials = async function(callback, credentials) {
-    try {
-      const wormholeResponse = await wormholeClient.getCredentials();
-      credentials.expireTime = new Date(wormholeResponse.expiration);
-      credentials.expired = false;
-      credentials.accessKeyId = wormholeResponse.accessKeyId;
-      credentials.secretAccessKey = wormholeResponse.secretAccessKey;
-      credentials.sessionToken = wormholeResponse.sessionToken;
-      credentials.haveBeenRefreshed = true;
-    } catch (e) {
-      callback(e.getMessage());
-    }
-    callback();
-  };
   const wormholeCredentialsProvider = async () => {
     try {
       const wormholeResponse = await wormholeClient.getCredentials();
@@ -82,5 +83,6 @@ const getCredentials = async () => {
 
 module.exports = {
   getCredentials,
+  refreshCredentials,
   getProviders
 };

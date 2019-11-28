@@ -10,6 +10,12 @@ describe("wormhole-credentials-procvider", () => {
     jest.resetAllMocks();
   });
 
+  const mockWormholeResponse = {
+    accessKeyId: "foo",
+    secretAccessKey: "bar",
+    expiration: "2019-11-28T11:53:18.000Z"
+  };
+
   test("getCredentials returns EnvironmentCredentials where set", async () => {
     process.env.AWS_ACCESS_KEY_ID = "ABCDERGHIJKLMNO";
     process.env.AWS_SECRET_ACCESS_KEY =
@@ -22,10 +28,7 @@ describe("wormhole-credentials-procvider", () => {
   test("getCredentials resolves wormhole credentials provider in absence of any others", async () => {
     process.env = {};
     axios.get.mockRejectedValue({ foo: "bar" });
-    wormholeClient.getCredentials.mockResolvedValue({
-      AWS_ACCESS_KEY_ID: "foo",
-      AWS_SECRET_ACCESS_KEY: "bar"
-    });
+    wormholeClient.getCredentials.mockResolvedValue(mockWormholeResponse);
     const provider = require("./index");
     const credentials = await provider.getCredentials();
     expect(credentials instanceof AWS.Credentials).toBe(true);
@@ -52,5 +55,14 @@ describe("wormhole-credentials-procvider", () => {
         provider => provider() instanceof AWS.EC2MetadataCredentials
       )
     ).toBe(true);
+  });
+
+  test("refreshCredentials updates credentials obect with response from wormhole", async () => {
+    const provider = require("./index");
+    const callbackMock = jest.fn();
+    const mockCredentials = {};
+    wormholeClient.getCredentials.mockResolvedValue(mockWormholeResponse);
+    await provider.refreshCredentials(callbackMock, mockCredentials);
+    expect(mockCredentials.accessKeyId).toBe("foo");
   });
 });
