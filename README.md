@@ -1,6 +1,6 @@
 # Wormhole Credentials Provider
 
-Credenials provider for the AWS SDK which will fallback to the wormhole where no other credentials are available.
+Credentials provider for the AWS SDK which will fallback to the wormhole where no other credentials are available.
 
 ## usage
 
