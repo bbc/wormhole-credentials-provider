@@ -8,10 +8,8 @@ const isRunningOnAws = async () => {
     await axios.get("http://169.254.169.254/latest/meta-data", {
       timeout: 1500
     });
-    console.log("RUNNING ON AWS!");
     return true;
   } catch (error) {
-    console.log("NOT RUNNING ON AWS!");
     return false;
   }
 };
@@ -69,7 +67,6 @@ const getProviders = async () => {
     sharedIniFileCredentials
   ];
 
-  console.log("about to check where it is running");
   if (await isRunningOnAws()) credentialsProviders.push(ec2InstanceCredentials);
 
   credentialsProviders.push(wormholeCredentialsProvider);
