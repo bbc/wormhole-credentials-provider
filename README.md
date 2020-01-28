@@ -2,6 +2,8 @@
 
 Credentials provider for the AWS SDK which will fallback to the wormhole where no other credentials are available.
 
+## This is in ALPHA and may have a few issues to iron out!
+
 ## usage
 
 add to project (not actually published yet!)
