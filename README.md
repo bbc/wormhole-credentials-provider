@@ -95,6 +95,6 @@ You can access the wormhole docs [here](https://wormhole.api.bbci.co.uk/docs/gui
 7. itegrate with one of our services which has a long-running process
 8. can we return the credentials provider array and set that in AWS config?
 9. proxy support
-10. swap out axios for a BBC shaped http client
+10. swap out axios for a BBC shaped http client [Flashheart]
 
 [Here is the AWS doc stuff](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CredentialProviderChain.html)
