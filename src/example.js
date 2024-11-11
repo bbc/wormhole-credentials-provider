@@ -4,7 +4,7 @@ const credentialsProvider = require("./index");
 AWS.config.update({ region: "eu-west-1" });
 
 const QueueUrl =
-  "https://sqs.eu-west-1.amazonaws.com/169163488685/phill-test-topic-queue";
+  "https://sqs.eu-west-1.amazonaws.com/1234567890/phill-test-topic-queue";
 
 const parameters = {
   AttributeNames: ["SentTimestamp"],
